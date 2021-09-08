@@ -1,0 +1,39 @@
+body {
+  margin: 0 auto;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  text-align: center;
+  background: darkgray;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sub {
+  text-align: center;
+}
+
+.square-container {
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: ivory;
+  width: 600px;
+  height: 600px;
+}
+
+.square {
+  width: 180px;
+  height: 180px;
+  border-radius: 10px;
+  margin: 10px;
+  background: teal;
+}
+
+.mark {
+  font-size: xx-large;
+}
