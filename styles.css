@@ -32,8 +32,15 @@ body {
   border-radius: 10px;
   margin: 10px;
   background: teal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.square:hover {
+  cursor: pointer;
 }
 
 .mark {
-  font-size: xx-large;
+  font-size: 7em;
 }
