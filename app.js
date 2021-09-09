@@ -9,40 +9,67 @@ class Model {
   }
 
   arrBuilder = (num) => {
-    const inArr = Array.from({ length: num }, () => null);
-    const resArr = Array.from({ length: num }, () => inArr);
+    let resArr = [];
+    for (let i = 0; i < num; i++) {
+      let temp = [];
+      for (let j = 0; j < num; j++) {
+        temp.push(null);
+      }
+      resArr.push(temp);
+    }
     return resArr;
   }
 
   horizontalCheck = () => {
-    for (let i = 0; i < this.state.length; i++){
-      const currVal = this.state[i][0];
-      for (let j = 1; j < this.state[i].length; j++){
-        if (this.state[i][j] == null || currVal !== this.state[i][j]) break;
-        if (j == 2) return true;
-      }
+    for (let i = 0; i < this.state.length; i++) {
+      const val = this.state[i][0];
+      const lineAll = this.state[i].every(curr => curr != null && curr === val);
+      if (lineAll) return true;
     }
     return false;
   }
 
   verticalCheck = () => {
-    for (let i = 0; i < this.state.length; i++){
-      const currVal = this.state[0][i];
-      for (let j = 1; j < this.state.length; j++){
-        // console.log(this.state[j][i],this.state)
-        if (this.state[j][i] == null || currVal !== this.state[j][i]) break;
-        if (j == 2) return true;
+    let j = 0;
+    for (let i = 0; i < this.state.length; i++) {
+      const val = this.state[j][i];
+      while (j < this.state.length - 1) {
+        const curr = this.state[++j][i];
+        if (curr === null || curr !== val) break;
+        if (j == this.state.length - 1) return true;
       }
+      j = 0;
     }
     return false;
   }
 
+
   diagonalCheck = () => {
-    const rightUp = [this.state[2][0], this.state[1][1], this.state[0][2]];
-    const rightDown = [this.state[0][0], this.state[1][1], this.state[2][2]];
-    const upCheck = rightUp.every(val => val != null && val == rightUp[0]);
-    const downCheck = rightDown.every(val => val != null && val == rightDown[0]);
-    return upCheck || downCheck;
+    const rightUp = this.rightUpCheck();
+    const rightDown = this.rightDownCheck();
+    return rightUp || rightDown;
+  }
+
+  rightUpCheck = () => {
+    let j = 0;
+    let i = this.state.length - 1;
+    const val = this.state[this.state.length - 1][j];
+    while (i > 0) {
+      const curr = this.state[--i][++j];
+      if (curr === null || val !== curr) return false;
+    }
+    return true;
+  }
+
+  rightDownCheck = () => {
+    let j = 0;
+    let i = 0;
+    const val = this.state[i][j];
+    while (i < this.state.length - 1) {
+      const curr = this.state[++i][++j];
+      if (curr === null || val !== curr) return false;
+    }
+    return true;
   }
 }
 class View {
@@ -108,7 +135,7 @@ class Controller {
 
   static addMarkAndEvaluateGame = (squares) => {
     for (let i = 0; i < squares.state.length; i++) {
-      for (let j = 0; j < squares.state[i].length; j++){
+      for (let j = 0; j < squares.state[i].length; j++) {
         const curr = document.querySelectorAll(`#sec${i}${j}`)[0];
         curr.addEventListener('click', () => {
           if (curr.childNodes.length === 1) return;
@@ -117,7 +144,7 @@ class Controller {
           const h1 = document.createElement('h1');
           h1.classList.add('mark');
 
-          this.cycleOrCross(squares.state, curr, playerNum.innerText, h1, i , j)
+          this.cycleOrCross(squares.state, curr, playerNum.innerText, h1, i, j)
 
           if (this.evaluateWin(squares)) alert(`Player ${playerNum.innerText} is win!`);
           else if (this.checkAllFill(squares.state)) alert('Draw Game');
@@ -129,6 +156,7 @@ class Controller {
   }
 
   static cycleOrCross = (state, curr, playerNum, h1, i, j) => {
+    console.log(state)
     if (playerNum === '1') {
       h1.innerText = "◯";
       h1.classList.add('cycle');
@@ -148,7 +176,7 @@ class Controller {
     const horizontal = squares.horizontalCheck();
     const vertical = squares.verticalCheck();
     const diagonal = squares.diagonalCheck();
-    // console.log(horizontal, vertical, diagonal)
+
     return horizontal || vertical || diagonal;
   }
 
