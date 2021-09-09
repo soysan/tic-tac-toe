@@ -81,8 +81,10 @@ class Controller {
 
           if (playerNum.innerText === '1') {
             h1.innerText = "◯";
+            h1.classList.add('cycle');
           } else {
             h1.innerText = "×";
+            h1.classList.add('cross');
           }
           Model.state[i][j] = h1.innerText;
           curr.append(h1);
