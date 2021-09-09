@@ -30,17 +30,14 @@ body {
 .square-container {
   border-radius: 10px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
   background: ivory;
-  width: 600px;
-  height: 600px;
 }
 
 .square {
-  width: 180px;
-  height: 180px;
   border-radius: 10px;
-  margin: 10px;
+  margin: 8px;
   background: teal;
   display: flex;
   justify-content: center;
@@ -49,10 +46,6 @@ body {
 
 .square:hover {
   cursor: pointer;
-}
-
-.mark {
-  font-size: 7em;
 }
 
 .cycle {

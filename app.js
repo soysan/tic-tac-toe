@@ -130,7 +130,21 @@ class Controller {
     config.initial.classList.add('disableToSee');
     config.main.classList.remove('disableToSee');
     View.mainView(squares);
+    this.rowByNum(num);
     this.addMarkAndEvaluateGame(squares);
+  }
+
+  static rowByNum = (num) => {
+    const container = document.querySelector('.square-container');
+    container.style.gridTemplateColumns = `repeat(${num}, 1fr)`;
+    const squares = document.querySelectorAll('.square');
+    const aspect = num >= 7 ? 80 : 120;
+    const font = aspect == 80 ? 2 : 3;
+    for (let s of squares) {
+      s.style.width = `${aspect}px`;
+      s.style.height = `${aspect}px`;
+      s.style.fontSize = `${font}em`;
+    }
   }
 
   static addMarkAndEvaluateGame = (squares) => {
@@ -142,7 +156,7 @@ class Controller {
 
           const playerNum = document.querySelectorAll('#player')[0];
           const h1 = document.createElement('h1');
-          h1.classList.add('mark');
+          // h1.classList.add('mark');
 
           this.cycleOrCross(squares.state, curr, playerNum.innerText, h1, i, j)
 
