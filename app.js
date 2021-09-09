@@ -80,7 +80,7 @@ class View {
     div.innerHTML +=
       `
       <h1>Tic Tac Toe Game</h1>
-      <p>３以上の数で奇数の１列のマスの数を入力ください</p>
+      <p>３以上の奇数を入力ください。その数が１列になります。</p>
       <input class="inputVal" type="number" value="3" />
       <button type="button" id="btn">Game Start</button>
       `
@@ -156,12 +156,11 @@ class Controller {
 
           const playerNum = document.querySelectorAll('#player')[0];
           const h1 = document.createElement('h1');
-          // h1.classList.add('mark');
 
           this.cycleOrCross(squares.state, curr, playerNum.innerText, h1, i, j)
 
-          if (this.evaluateWin(squares)) alert(`Player ${playerNum.innerText} is win!`);
-          else if (this.checkAllFill(squares.state)) alert('Draw Game');
+          if (this.evaluateWin(squares)) alert(`Player ${playerNum.innerText} の勝ちです`);
+          else if (this.checkAllFill(squares.state)) alert('引き分けです');
 
           this.changePlayerNum(playerNum, h1.innerText);
         })
